@@ -1,0 +1,392 @@
+<html>
+    <head>
+        <link href="clickography.css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> 
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script> 
+        
+        <title>CLICKOGRAPHY</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script>
+            function initComparisons() {
+              var x, i;
+              /*find all elements with an "overlay" class:*/
+              x = document.getElementsByClassName("img-comp-overlay");
+              for (i = 0; i < x.length; i++) {
+                /*once for each "overlay" element:
+                pass the "overlay" element as a parameter when executing the compareImages function:*/
+                compareImages(x[i]);
+              }
+              function compareImages(img) {
+                var slider, img, clicked = 0, w, h;
+                /*get the width and height of the img element*/
+                w = img.offsetWidth;
+                h = img.offsetHeight;
+                /*set the width of the img element to 50%:*/
+                img.style.width = (w / 2) + "px";
+                /*create slider:*/
+                slider = document.createElement("DIV");
+                slider.setAttribute("class", "img-comp-slider");
+                /*insert slider*/
+                img.parentElement.insertBefore(slider, img);
+                /*position the slider in the middle:*/
+                slider.style.top = (h / 2) - (slider.offsetHeight / 2) + "px";
+                slider.style.left = (w / 2) - (slider.offsetWidth / 2) + "px";
+                /*execute a function when the mouse button is pressed:*/
+                slider.addEventListener("mousedown", slideReady);
+                /*and another function when the mouse button is released:*/
+                window.addEventListener("mouseup", slideFinish);
+                /*or touched (for touch screens:*/
+                slider.addEventListener("touchstart", slideReady);
+                /*and released (for touch screens:*/
+                window.addEventListener("touchstop", slideFinish);
+                function slideReady(e) {
+                  /*prevent any other actions that may occur when moving over the image:*/
+                  e.preventDefault();
+                  /*the slider is now clicked and ready to move:*/
+                  clicked = 1;
+                  /*execute a function when the slider is moved:*/
+                  window.addEventListener("mousemove", slideMove);
+                  window.addEventListener("touchmove", slideMove);
+                }
+                function slideFinish() {
+                  /*the slider is no longer clicked:*/
+                  clicked = 0;
+                }
+                function slideMove(e) {
+                  var pos;
+                  /*if the slider is no longer clicked, exit this function:*/
+                  if (clicked == 0) return false;
+                  /*get the cursor's x position:*/
+                  pos = getCursorPos(e)
+                  /*prevent the slider from being positioned outside the image:*/
+                  if (pos < 0) pos = 0;
+                  if (pos > w) pos = w;
+                  /*execute a function that will resize the overlay image according to the cursor:*/
+                  slide(pos);
+                }
+                function getCursorPos(e) {
+                  var a, x = 0;
+                  e = e || window.event;
+                  /*get the x positions of the image:*/
+                  a = img.getBoundingClientRect();
+                  /*calculate the cursor's x coordinate, relative to the image:*/
+                  x = e.pageX - a.left;
+                  /*consider any page scrolling:*/
+                  x = x - window.pageXOffset;
+                  return x;
+                }
+                function slide(x) {
+                  /*resize the image:*/
+                  img.style.width = x + "px";
+                  /*position the slider:*/
+                  slider.style.left = img.offsetWidth - (slider.offsetWidth / 2) + "px";
+                }
+              }
+            }
+       </script>
+       <script src="clickography.js"></script>
+    </head>
+    
+<body>
+        
+    <nav background-color:black; class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="btn btn-dark" href="#" role="button">CLICKOGRAPHY</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Classes<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Streaming Now<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="#">Community<span class="sr-only">(current)</span></a>
+          </li>
+            <li class="nav-item dropdown">
+            <a class="nav-link" href="#">For Teams<span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="pics/6.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="pics/product p.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="pics/wedding p.jpg" class="d-block w-100" alt="...">
+        </div>
+          <div class="carousel-item">
+          <img src="pics/aerial p.jpg" class="d-block w-100" alt="...">
+        </div>
+          <div class="carousel-item">
+          <img src="pics/potrait p.jpg" class="d-block w-100" alt="...">
+        </div>
+          <div class="carousel-item">
+          <img src="pics/wildlife p.jpg" class="d-block w-100" alt="...">
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+    
+    <div class="parallax"></div>
+    
+    <div class="jumbotron jumbotron-fluid" style="font-family:garamond">
+      <div class="container">
+          <h1 class="display-4"><i><b><center>PHOTOGRAPHY 101</center></b></i></h1>
+        <p class="lead" style="font-family:perpetua"><center>The Ultimate Guide for Beginners.</center></p>
+      </div>
+    </div>
+    
+    <p style="color: white;font-size:20px; font-family:inherit; background-color:darkslategrey">Take that camera off auto mode! Our free photography tutorials for beginners to intermediate photographers are simple to follow. Learn how all the knobs and buttons work, so you can stop using your iPhone and start capturing photos on your DSLR with confidence.<br><br>Whether you’re new to photography or want to brush up on skills, our Ultimate Photography Guides will set you up for success.<br><br>Ready to share photos with family and friends? Follow our guides on simple software workflow tips to easily retouch images for pictures that impress.</p>
+    
+    
+     <div class="parallax"></div>
+    
+    
+    <div class="row row-cols-1 row-cols-md-3">
+      <div class="col mb-4">
+        <div class="card text-white bg-dark h-100">
+          <img src="pics/aperture.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">What is Aperture?</h5>
+            <p class="card-text">Beginner photographers are often intimidated by the term exposure triangle, and think that they missed a lesson in geometry class. But the 3 components of this triangle - aperture, ISO and shutter speed - are key when learning about the technique and composition of an image.</p>
+              <a href="#" class="btn btn-light">More></a>
+          </div>
+        </div>
+      </div>
+      <div class="col mb-4">
+        <div class="card text-white bg-dark h-100">
+          <img src="pics/lighting.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Lighting</h5>
+            <p class="card-text">Even the most expensive camera is worthless inside a completely dark room. We've come a long way from the first room-sized cameras, the essence of photography has remained the same: light. Whether you are shooting film or digital, you cannot shoot anything without light.</p>
+              <a href="#" class="btn btn-light">More></a>
+          </div>
+        </div>
+      </div>
+      <div class="col mb-4">
+        <div class="card text-white bg-dark h-100">
+          <img src="pics/shutter speed.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Shutter Speed</h5>
+            <p class="card-text">That characteristic sound that a camera takes as it snaps a photo? That’s the camera’s shutter. And while the shutter may move the same way every time you take a photograph, it doesn’t always move at the same speed.</p>
+              <a href="#" class="btn btn-light">More></a>
+          </div>
+        </div>
+      </div>
+        <div class="col mb-4">
+        <div class="card text-white bg-dark h-100">
+          <img src="pics/focus.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Focus Stacking</h5>
+            <p class="card-text">Digital cameras are powerful tools — over the past few years, they’ve added megapixels while shedding weight and dramatically improving low light performance. But, there’s still only so much you can do with a single photograph.</p>
+              <a href="#" class="btn btn-light">More></a>
+          </div>
+        </div>
+      </div>
+      <div class="col mb-4">
+        <div class="card text-white bg-dark h-100">
+          <img src="pics/composition.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Composition Techniques</h5>
+            <p class="card-text">Photography composition and the Rule of Thirds go together like peanut butter and jelly — it’s nearly impossible to find one without the other in photography tutorials.</p>
+              <a href="#" class="btn btn-light">More></a>
+          </div>
+        </div>
+      </div>
+      <div class="col mb-4">
+        <div class="card text-white bg-dark h-100">
+          <img src="pics/subject.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Photography Subject</h5>
+            <p class="card-text">What’s in a subject? Choosing a photography subject is essential to the process of taking a picture. Sometimes, the subject is selected by default or spur-of-the-moment inspiration...</p>
+              <a href="#" class="btn btn-light">More></a>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+    
+    
+    
+    <div class="parallax"></div>
+    
+    <div class="jumbotron jumbotron-fluid" style="font-family:garamond">
+      <div class="container">
+          <h1 class="display-4"><i><b><center>ANATOMY OF A CAMERA</center></b></i></h1>
+      </div>
+    </div>
+    
+    <table>
+        <tr>
+            <td><img src="pics/Anatomy Of The Camera.jpg" width="432px" height="500px" ></td>
+            <td><img src="pics/pick.gif" width="432px" height="500px"></td>
+            <td><img src="pics/parts.jpg" width="452px" height="500px"></td>
+        </tr>
+    </table>
+    
+    <p style="color: white;font-size:20px; font-family:inherit; background-color: darkslategrey; "><strong>The Camera Lens: </strong>There are various types of camera lenses available. The most common types of lenses are Wide Angle, Standard, Telephoto, and Zoom lenses. Please refer to the tutorial or the <a href="">Zoom Lenses</a> tutorial to learn the different uses and functions for each of these types of camera lenses...<a href="">Read More</a><br><br><strong>The Camera Lens Aperture:</strong>A large aperture opening would be an aperture setting such as F2.8 or F4 while a small opening would be set at F16 or F11. The aperture opening size also helps to determine how much certain areas of the image will be in focus or out of focus. (that is called <a href="">Depth of Field</a>) for each of these types of camera lenses...<a href="">Read More</a><br><br><strong>The Camera Shutter:</strong>A 1/30 shutter speed means the shutter will be open for one thirtieth of a second. A 1/250 shutter speed will keep the shutter open for one two hundred and fiftieth of a second. Check the <a href="">Camera Shutter and Shutter Speeds</a> tutorial to see why shutter speed is important...<a href="">Read More</a><br><br><strong>The Camera Image Sensor: </strong>There are various types of camera lenses available. The most common types of lenses are Wide Angle, Standard, Telephoto, and Zoom lenses. Please refer to the tutorial or the <a href="">Zoom Lenses</a> tutorial to learn the different uses and functions for each of these types of camera lenses...<a href="">Read More</a><br><br><strong>Eye Level Optical Viewfinders</strong>A large aperture opening would be an aperture setting such as F2.8 or F4 while a small opening would be set at F16 or F11. The aperture opening size also helps to determine how much certain areas of the image will be in focus or out of focus. (that is called <a href="">Depth of Field</a>) for each of these types of camera lenses...<a href="">Read More</a><br><br><strong>Screens:</strong>A 1/30 shutter speed means the shutter will be open for one thirtieth of a second. A 1/250 shutter speed will keep the shutter open for one two hundred and fiftieth of a second. Check the <a href="">Camera Shutter and Shutter Speeds</a> tutorial to see why shutter speed is important...<a href="">Read More</a> </p>
+    
+    <div class="jumbotron jumbotron-fluid" style="font-family:garamond">
+      <div class="container">
+          <h1 class="display-4"><i><b><center>OUR WORK</center></b></i></h1>
+        <p class="lead" style="font-family:perpetua"><center>Take a peek...</center></p>
+      </div>
+    </div>
+    
+             <base href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/wanaka-tree.jpg">
+                <div id="carousel">
+                  <figure id="spinner">
+                    <img src="wanaka-tree.jpg" alt>
+                    <img src="still-lake.jpg" alt>
+                    <img src="pink-milford-sound.jpg" alt>
+                    <img src="paradise.jpg" alt>
+                    <img src="morekai.jpg" alt>
+                    <img src="milky-blue-lagoon.jpg" alt>
+                    <img src="lake-tekapo.jpg" alt>
+                    <img src="milford-sound.jpg" alt>
+                  </figure>
+                </div>
+                <span style="float:left" class="ss-icon" onclick="galleryspin('-')">&lt;</span>
+                <span style="float:right" class="ss-icon" onclick="galleryspin('')">&gt;</span>
+    
+    
+    <div class="jumbotron jumbotron-fluid" style="font-family:garamond">
+      <div class="container">
+          <h1 class="display-4"><i><b><center>WE'D LOVE TO HEAR FROM YOU.</center></b></i></h1>
+        <p class="lead" style="font-family:perpetua"><center>Have a question about us? Need to talk to customer service? Have a great idea? Drop us a line and we'll get back to you as soon as we can.</center></p>
+      </div>
+    </div>
+
+            <footer class="ct-footer">
+              <div class="container">
+                <form name="contentForm" enctype="multipart/form-data" method="post" action="">
+                  <div class="ct-footer-pre text-center-lg">
+                    <div class="inner">
+                      <span>Join CLICKOGRAPHY to share your work!</span>
+                    </div>
+                    <div class="inner">
+                      <div class="form-group">
+                        <input name="formfields[nl_email]" id="nl_email" class="validate[required]" placeholder="Enter your email address" type="text" value=""> <label for="nl_email" class="sr-only">Email Address</label> <button type="submit" class="btn btn-motive">Join</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <ul class="ct-footer-list text-center-sm">
+                  <li>
+                    <h2 class="ct-footer-list-header">Reach Us</h2>
+                    <ul>
+                      <li>
+                        <a href="">Contact</a>
+                      </li>
+                      <li>
+                        <a href="">Help</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <h2 class="ct-footer-list-header">Company</h2>
+                    <ul>
+                      <li>
+                        <a href="">About</a>
+                      </li>
+                      <li>
+                        <a href="">Instructor</a>
+                      </li>
+                      <li>
+                        <a href="">Press</a>
+                      </li>
+                      <li>
+                        <a href="">Blog</a>
+                      </li>
+                      <li>
+                        <a href="">Careers</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <h2 class="ct-footer-list-header">Community</h2>
+                    <ul>
+                      <li>
+                        <a href="">become an affiliate</a>
+                      </li>
+                      <li>
+                        <a href="">Refer a friend</a>
+                      </li>
+                      <li>
+                        <a href="">Creative guides</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <h2 class="ct-footer-list-header">Public Relations</h2>
+                    <ul>
+                      <li>
+                        <a href="">WebCorpCo Blog</a>
+                      </li>
+                      <li>
+                        <a href="">Hackathons</a>
+                      </li>
+                      <li>
+                        <a href="">Videos</a>
+                      </li>
+                      <li>
+                        <a href="">News Releases</a>
+                      </li>
+                      <li>
+                        <a href="">Newsletters</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="ct-footer-post">
+                <div class="container">
+                  <div class="inner-left">
+                    <ul>
+                      <li>
+                        <a href="">FAQ</a>
+                      </li>
+                      <li>
+                        <a href="">News</a>
+                      </li>
+                      <li>
+                        <a href="">Contact Us</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </footer>
+    
+            <script>
+            initComparisons();
+            </script>
+           <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> 
+           <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    </body>
+</html>
